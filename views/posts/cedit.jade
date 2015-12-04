@@ -1,0 +1,22 @@
+extends ../layout
+
+block content
+  h1= post.title
+  h3 by #{post.email}
+  .well= post.content
+
+  hr
+  h3 질문 수정 (#{post.numComment})
+  table.table
+    tr
+      th 질문 제목
+      th 질문 내용
+
+  each comment in comments
+    form.form-inline(action='/posts/' + post._id + '/cedita', method='POST')
+      .form-group
+        input.form-control(type='String', id='email', name='email', placeholder='질문 제목', value=comment.email)
+      .form-group
+        input.form-control(type='String', id='email', name='email', placeholder='질문 제목', size=50, value=comment.content)
+
+      button.btn.btn-primary 완료

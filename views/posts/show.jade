@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+  h1= post.title
+  h3 by #{post.email}
+  .well= post.content
+
+  hr
+  h3 Comment (#{post.numComment})
+  table.table
+    tr
+      th 질문 제목
+      th 질문 내용
+      th time
+      th
+
+    each comment in comments
+      tr
+        td= comment.email
+        td= comment.content
+        td= moment(comment.createdAt).format('YYYY/MM/DD')
+        td
+          a.btn.btn-xs.btn-default(data-id=comment.id, class='delete') 삭제
+
+  form.form-inline(action='/posts/' + post._id + '/comments', method='POST')
+    .form-group
+      label.sr-only(for='email') 질문 제목
+      input.form-control(name='email', placeholder='질문 제목')
+    .form-group
+      label.sr-only(for='content') 질문 내용
+      input.form-control(name='content', size=50, placeholder='질문 내용')
+    button.btn.btn-info 항목저장
+
+  hr
+  a.btn.btn-default(href='/posts') 목록
+  |=
+  a.btn.btn-default(href='/posts/#{post.id}/cedit') 수정
+
+  form#deleteForm(style='display:none', method="POST")
+
+    script(type='text/javascript').
+      $(".delete").click(function(e) {
+        var id = $(e.currentTarget).data('id');
+        if (confirm('정말 삭제하시겠습니까?')) {
+          //$("#deleteForm").attr('action', "/posts/" + id + "?_method=DELETE").submit();
+        }
+        return false;
+      });

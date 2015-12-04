@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  .container
+      h1.page-header 설문 수정
+
+    form(action = "/posts/#{post.id}?_method=PUT", method='POST')
+      .form-group
+        label(for='email') 작성자
+        input.form-control(type='String', id='email', name='email', placeholder='Email', value=post.email)
+      .form-group
+        label(for='title') 설문 제목
+        input.form-control(type='text', id='title', name='title', placeholder='title', value=post.title)
+      .form-group
+        label(for='content') 설문 요약
+        textarea.form-control(id='content', rows='10', name='content', placeholder='content here')= post.content
+
+      div.form-actions
+        a.btn.btn-default(href='javascript:window.history.back();') 뒤로
+        |-
+        button.btn.btn-primary(type='submit') 완료
